@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package wolf;
+
+service ConfigService {
+  rpc GetConfig (Request) returns (Config);
+}
+
+message Request {
+  string id = 1;
+  string version = 2;
+}
+
+message Config {
+  string data = 1;
+}
