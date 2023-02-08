@@ -1,0 +1,22 @@
+name: Delete merged branches
+
+on:
+  schedule:
+    - cron: '0 0/6 * * *'
+
+jobs:
+  cleanup_old_branches:
+    runs-on: ubuntu-latest
+    name: Cleanup branches
+    steps:
+      - name: Delete branches
+        uses: phpdocker-io/github-actions-delete-abandoned-branches@v1
+        id: delete_stuff
+        with:
+          github_token: ${{ github.token }}
+          last_commit_age_days: 1
+          ignore_branches: develop, main
+          dry_run: no
+
+      - name: Output
+        run: "echo 'Deleted branches: ${{ steps.delete_stuff.outputs.deleted_branches }}'"
